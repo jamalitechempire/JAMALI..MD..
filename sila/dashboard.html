@@ -27,6 +27,7 @@
             overflow-x: hidden;
         }
 
+        /* Animated Background */
         .bg-animation {
             position: fixed;
             top: 0;
@@ -52,6 +53,7 @@
             to { transform: rotate(360deg); }
         }
 
+        /* Floating Particles */
         .particles {
             position: fixed;
             top: 0;
@@ -77,6 +79,7 @@
             100% { transform: translateY(-10vh) scale(1); opacity: 0; }
         }
 
+        /* Main Container */
         .dashboard-container {
             position: relative;
             z-index: 2;
@@ -85,6 +88,7 @@
             padding: 20px;
         }
 
+        /* Header */
         .header {
             background: rgba(10, 10, 20, 0.6);
             backdrop-filter: blur(20px);
@@ -149,6 +153,7 @@
             letter-spacing: 1px;
         }
 
+        /* Install App Button */
         .install-card {
             background: linear-gradient(135deg, rgba(0, 246, 255, 0.15), rgba(180, 0, 255, 0.15));
             border: 1px solid rgba(0, 246, 255, 0.3);
@@ -160,6 +165,7 @@
             50% { box-shadow: 0 0 20px rgba(0, 246, 255, 0.6); }
         }
 
+        /* Floating Help Button */
         .help-float {
             position: fixed;
             bottom: 30px;
@@ -196,36 +202,10 @@
             color: #fff;
         }
 
-        .admin-hidden {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 100;
-            opacity: 0.3;
-            transition: all 0.3s;
-        }
-
-        .admin-hidden:hover {
-            opacity: 1;
-            background: rgba(0, 246, 255, 0.2);
-        }
-
-        .admin-hidden i {
-            font-size: 18px;
-            color: #00f6ff;
-        }
-
+        /* Navigation Cards */
         .nav-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
             margin-bottom: 40px;
         }
@@ -292,6 +272,7 @@
             color: #000;
         }
 
+        /* Sessions Table */
         .sessions-section {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(10px);
@@ -369,6 +350,12 @@
             border: 1px solid rgba(0, 255, 136, 0.3);
         }
 
+        .status-offline {
+            background: rgba(255, 68, 68, 0.2);
+            color: #ff4444;
+            border: 1px solid rgba(255, 68, 68, 0.3);
+        }
+
         .action-buttons {
             display: flex;
             gap: 10px;
@@ -394,6 +381,7 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
+        /* Premium Modal */
         .modal {
             display: none;
             position: fixed;
@@ -433,26 +421,6 @@
             cursor: pointer;
         }
 
-        .admin-login-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .admin-login-form input {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(0, 246, 255, 0.3);
-            padding: 15px;
-            border-radius: 12px;
-            color: #fff;
-            font-size: 1rem;
-        }
-
-        .admin-login-form input:focus {
-            outline: none;
-            border-color: #00f6ff;
-        }
-
         .submit-btn {
             background: linear-gradient(135deg, #00f6ff, #b400ff);
             border: none;
@@ -462,6 +430,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            width: 100%;
         }
 
         .submit-btn:hover {
@@ -469,6 +438,7 @@
             box-shadow: 0 10px 20px rgba(0, 246, 255, 0.3);
         }
 
+        /* Footer */
         .footer {
             text-align: center;
             padding: 30px;
@@ -476,6 +446,7 @@
             font-size: 0.8rem;
         }
 
+        /* Loading */
         .loading {
             display: inline-block;
             width: 20px;
@@ -490,6 +461,7 @@
             to { transform: rotate(360deg); }
         }
 
+        /* Toast Notification */
         .toast {
             position: fixed;
             bottom: 100px;
@@ -502,7 +474,6 @@
             padding: 12px 24px;
             z-index: 1000;
             transition: transform 0.3s ease;
-            white-space: nowrap;
             font-weight: 500;
         }
 
@@ -544,6 +515,7 @@
 <div class="particles" id="particles"></div>
 
 <div class="dashboard-container">
+    <!-- Header -->
     <div class="header">
         <div class="logo">
             <h1>⚡ MOMY-KIDY</h1>
@@ -569,6 +541,7 @@
         </div>
     </div>
 
+    <!-- Navigation Cards (NO ADMIN BUTTON) -->
     <div class="nav-grid">
         <div class="nav-card" onclick="window.location.href='/config?number='">
             <div class="premium-badge">FREE</div>
@@ -588,14 +561,9 @@
             <h3>Premium Features</h3>
             <p>Unlock advanced bot capabilities</p>
         </div>
-        <div class="nav-card" onclick="showAdminLogin()">
-            <div class="premium-badge">🔐 ADMIN</div>
-            <div class="nav-icon">🛡️</div>
-            <h3>Admin Panel</h3>
-            <p>Full control over all bot sessions</p>
-        </div>
     </div>
 
+    <!-- Sessions Section -->
     <div class="sessions-section">
         <div class="section-header">
             <h2><i class="fas fa-server"></i> Active Sessions</h2>
@@ -609,7 +577,7 @@
                     <tr><th>Number</th><th>Status</th><th>Uptime</th><th>Commands</th><th>Actions</th></tr>
                 </thead>
                 <tbody id="sessionsBody">
-                    <tr><td colspan="5" style="text-align: center;"><div class="loading"></div> Loading sessions...</td><tr>
+                    <tr><td colspan="5" style="text-align: center;"><div class="loading"></div> Loading sessions...</td</tr>
                 </tbody>
             </table>
         </div>
@@ -621,29 +589,14 @@
     </div>
 </div>
 
+<!-- Floating Help Button -->
 <div class="help-float">
     <div class="help-btn" onclick="contactSupport()">
         <i class="fas fa-headset"></i>
     </div>
 </div>
 
-<div class="admin-hidden" onclick="showAdminLogin()">
-    <i class="fas fa-lock"></i>
-</div>
-
-<div id="adminModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3><i class="fas fa-shield-alt"></i> Admin Login</h3>
-            <button class="close-modal" onclick="closeAdminModal()">&times;</button>
-        </div>
-        <form class="admin-login-form" onsubmit="adminLogin(event)">
-            <input type="password" id="adminPin" placeholder="Enter Admin PIN" autocomplete="off">
-            <button type="submit" class="submit-btn">Verify & Access</button>
-        </form>
-    </div>
-</div>
-
+<!-- Premium Modal -->
 <div id="premiumModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -669,6 +622,7 @@
     </div>
 </div>
 
+<!-- Toast Container -->
 <div id="toast" class="toast"></div>
 
 <script>
@@ -684,6 +638,7 @@
         document.getElementById('particles').appendChild(particle);
     }
 
+    // Toast notification
     function showToast(message, type = 'info') {
         const toast = document.getElementById('toast');
         if(!toast) return;
@@ -694,6 +649,7 @@
         }, 3000);
     }
 
+    // Load sessions
     async function loadSessions() {
         try {
             const res = await fetch('/active');
@@ -737,12 +693,14 @@
         }
     }
 
+    // View session details
     function viewSession(number) {
         window.location.href = `/config?number=${encodeURIComponent(number)}`;
     }
 
+    // Reconnect session
     async function reconnectSession(number) {
-        if(confirm(`⚠️ Reconnect bot for ${number}?`)) {
+        if(confirm(`⚠️ Reconnect bot for ${number}?\nThis will attempt to restart the connection.`)) {
             try {
                 showToast(`Reconnecting bot ${number}...`, 'info');
                 const res = await fetch(`/code?number=${number}`);
@@ -761,8 +719,9 @@
         }
     }
 
+    // Disconnect session
     async function disconnectSession(number) {
-        if(confirm(`⚠️ WARNING: Disconnect bot for ${number}?`)) {
+        if(confirm(`⚠️ WARNING: Disconnect bot for ${number}?\nThis will remove the session permanently!`)) {
             try {
                 showToast(`Disconnecting bot ${number}...`, 'info');
                 const res = await fetch(`/disconnect?number=${number}`);
@@ -775,30 +734,7 @@
         }
     }
 
-    function showAdminLogin() {
-        document.getElementById('adminModal').style.display = 'flex';
-    }
-
-    function closeAdminModal() {
-        document.getElementById('adminModal').style.display = 'none';
-    }
-
-    async function adminLogin(event) {
-        event.preventDefault();
-        const pin = document.getElementById('adminPin').value;
-        const ADMIN_PIN = 'sila0022';
-        
-        if(pin === ADMIN_PIN) {
-            closeAdminModal();
-            showToast('Admin access granted!', 'success');
-            setTimeout(() => {
-                window.location.href = '/admin-panel';
-            }, 500);
-        } else {
-            showToast('❌ Invalid Admin PIN!', 'error');
-        }
-    }
-
+    // Premium modal
     function showPremiumModal() {
         document.getElementById('premiumModal').style.display = 'flex';
     }
@@ -807,6 +743,7 @@
         document.getElementById('premiumModal').style.display = 'none';
     }
 
+    // Contact functions
     function contactSupport() {
         window.open('https://wa.me/255789661031?text=Hello%20Sila%2C%20owner%20of%20MOMY-KIDY%2C%20I%20need%20help', '_blank');
     }
@@ -816,21 +753,63 @@
         window.open('https://wa.me/255789661031?text=HELLO%20SILA%20I%20WANT%20PREMIUM%20FEATURE%27S', '_blank');
     }
 
-    function installPWA() {
-        showToast('Use browser menu to install app: Tap ⋮ → Install App', 'info');
-    }
-
+    // ==================== PWA INSTALLATION ====================
     let deferredPrompt;
+
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
         const installBtn = document.getElementById('installBtn');
-        if(installBtn) installBtn.style.display = 'flex';
+        if(installBtn) {
+            installBtn.style.display = 'flex';
+            console.log('[PWA] Install button shown');
+        }
     });
 
+    function installPWA() {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('[PWA] User accepted install');
+                    showToast('App installed successfully! 🎉', 'success');
+                } else {
+                    showToast('Installation cancelled', 'info');
+                }
+                deferredPrompt = null;
+                const installBtn = document.getElementById('installBtn');
+                if(installBtn) installBtn.style.display = 'none';
+            });
+        } else {
+            showToast('Tap the menu (⋮) and select "Install App" or "Add to Home Screen"', 'info');
+        }
+    }
+
+    window.addEventListener('appinstalled', (evt) => {
+        console.log('[PWA] App was installed');
+        showToast('Thank you for installing MOMY-KIDY Bot! 🚀', 'success');
+        const installBtn = document.getElementById('installBtn');
+        if(installBtn) installBtn.style.display = 'none';
+    });
+
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').then((registration) => {
+                console.log('[PWA] Service Worker registered with scope:', registration.scope);
+            }).catch((error) => {
+                console.log('[PWA] Service Worker registration failed:', error);
+            });
+        });
+    }
+
+    // Auto refresh every 15 seconds
     let refreshInterval = setInterval(loadSessions, 15000);
+    
+    // Initial load
     loadSessions();
 
+    // Cleanup interval on page unload
     window.addEventListener('beforeunload', () => {
         if(refreshInterval) clearInterval(refreshInterval);
     });
