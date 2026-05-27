@@ -2,7 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MOMY-KIDY">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
     <title>MOMY-KIDY | Premium Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -115,6 +121,7 @@
         .stats-grid {
             display: flex;
             gap: 20px;
+            flex-wrap: wrap;
         }
 
         .stat-card {
@@ -124,6 +131,7 @@
             padding: 12px 20px;
             text-align: center;
             transition: all 0.3s;
+            cursor: pointer;
         }
 
         .stat-card:hover {
@@ -208,6 +216,18 @@
         .admin-hidden i {
             font-size: 18px;
             color: #00f6ff;
+        }
+
+        /* Install App Button */
+        .install-card {
+            background: linear-gradient(135deg, rgba(0, 246, 255, 0.15), rgba(180, 0, 255, 0.15));
+            border: 1px solid rgba(0, 246, 255, 0.3);
+            animation: pulseGlow 2s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(0, 246, 255, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(0, 246, 255, 0.6); }
         }
 
         /* Navigation Cards */
@@ -367,6 +387,7 @@
         .action-buttons {
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         .action-btn {
@@ -396,7 +417,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(10px);
             z-index: 1000;
             justify-content: center;
@@ -487,6 +508,31 @@
             to { transform: rotate(360deg); }
         }
 
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 246, 255, 0.3);
+            border-radius: 12px;
+            padding: 12px 24px;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.success { border-color: #00ff88; color: #00ff88; }
+        .toast.error { border-color: #ff4444; color: #ff4444; }
+        .toast.info { border-color: #00f6ff; color: #00f6ff; }
+
         @media (max-width: 768px) {
             .header {
                 flex-direction: column;
@@ -503,6 +549,11 @@
                 padding: 10px;
                 font-size: 0.8rem;
             }
+            .toast {
+                white-space: normal;
+                text-align: center;
+                max-width: 90%;
+            }
         }
     </style>
 </head>
@@ -515,21 +566,25 @@
     <!-- Header -->
     <div class="header">
         <div class="logo">
-            <h1>MOMY-KIDY</h1>
-            <p>PREMIUM BOT DASHBOARD v2.0</p>
+            <h1>⚡ MOMY-KIDY</h1>
+            <p>PREMIUM BOT DASHBOARD v3.0</p>
         </div>
         <div class="stats-grid">
-            <div class="stat-card">
+            <div class="stat-card" onclick="location.reload()">
                 <div class="stat-number" id="totalSessions">0</div>
                 <div class="stat-label">Total Sessions</div>
             </div>
-            <div class="stat-card">
+            <div class="stat-card" onclick="location.reload()">
                 <div class="stat-number" id="activeSessions">0</div>
                 <div class="stat-label">Active</div>
             </div>
-            <div class="stat-card">
+            <div class="stat-card" onclick="location.reload()">
                 <div class="stat-number" id="onlineSessions">0</div>
                 <div class="stat-label">Online</div>
+            </div>
+            <div class="stat-card install-card" id="installBtn" style="display: none;" onclick="installPWA()">
+                <div class="stat-number"><i class="fas fa-download"></i></div>
+                <div class="stat-label">Install App</div>
             </div>
         </div>
     </div>
@@ -576,7 +631,7 @@
                     <tr><th>Number</th><th>Status</th><th>Uptime</th><th>Commands</th><th>Actions</th></tr>
                 </thead>
                 <tbody id="sessionsBody">
-                    <tr><td colspan="5" style="text-align: center;">Loading sessions...</td></tr>
+                    <tr><td colspan="5" style="text-align: center;"><div class="loading"></div> Loading sessions...</td></tr>
                 </tbody>
             </table>
         </div>
@@ -584,6 +639,7 @@
 
     <div class="footer">
         <p>© 2026 MOMY-KIDY BOT | Powered by SILA TECH | All Rights Reserved</p>
+        <p style="font-size: 0.7rem; margin-top: 10px;">Version 3.0.0 | <i class="fas fa-shield-alt"></i> Secure Connection</p>
     </div>
 </div>
 
@@ -630,6 +686,7 @@
                 <li><i class="fas fa-check-circle" style="color: #00ff88;"></i> Multi-Device Management</li>
                 <li><i class="fas fa-check-circle" style="color: #00ff88;"></i> Priority Support 24/7</li>
                 <li><i class="fas fa-check-circle" style="color: #00ff88;"></i> Custom Commands Creation</li>
+                <li><i class="fas fa-check-circle" style="color: #00ff88;"></i> Remove Watermark & Branding</li>
             </ul>
             <button class="submit-btn" onclick="contactPremium()" style="width: 100%;">
                 <i class="fab fa-whatsapp"></i> Contact to Upgrade
@@ -637,6 +694,9 @@
         </div>
     </div>
 </div>
+
+<!-- Toast Container -->
+<div id="toast" class="toast"></div>
 
 <script>
     // Generate particles
@@ -649,6 +709,16 @@
         particle.style.animationDelay = Math.random() * 20 + 's';
         particle.style.animationDuration = Math.random() * 10 + 15 + 's';
         document.getElementById('particles').appendChild(particle);
+    }
+
+    // Toast notification
+    function showToast(message, type = 'info') {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.className = `toast ${type} show`;
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
     }
 
     // Load sessions
@@ -665,28 +735,32 @@
             if(data.numbers && data.numbers.length > 0) {
                 tbody.innerHTML = '';
                 for(const num of data.numbers) {
-                    const statusRes = await fetch(`/status?number=${num}`);
-                    const statusData = await statusRes.json();
-                    
-                    const row = tbody.insertRow();
-                    row.innerHTML = `
-                        <td>${num}</td>
-                        <td><span class="status-badge status-online">● ONLINE</span></td>
-                        <td>${statusData.uptime || '0'}s</td>
-                        <td>0</td>
-                        <td class="action-buttons">
-                            <button class="action-btn view" onclick="viewSession('${num}')" title="View Details"><i class="fas fa-eye"></i></button>
-                            <button class="action-btn reconnect" onclick="reconnectSession('${num}')" title="Reconnect"><i class="fas fa-sync-alt"></i></button>
-                            <button class="action-btn disconnect" onclick="disconnectSession('${num}')" title="Disconnect"><i class="fas fa-power-off"></i></button>
-                        </td>
-                    `;
+                    try {
+                        const statusRes = await fetch(`/status?number=${num}`);
+                        const statusData = await statusRes.json();
+                        
+                        const row = tbody.insertRow();
+                        row.innerHTML = `
+                            <td><strong>${num}</strong><br><small style="opacity:0.6">${num.slice(-6)}</small></td>
+                            <td><span class="status-badge status-online">● ONLINE</span></td>
+                            <td>${statusData.uptime || '0'}s</td>
+                            <td><i class="fas fa-terminal"></i> 0</td>
+                            <td class="action-buttons">
+                                <button class="action-btn view" onclick="viewSession('${num}')" title="View Details"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn reconnect" onclick="reconnectSession('${num}')" title="Reconnect"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn disconnect" onclick="disconnectSession('${num}')" title="Disconnect"><i class="fas fa-power-off"></i></button>
+                            </td>
+                        `;
+                    } catch(e) {
+                        console.error('Error loading session for', num, e);
+                    }
                 }
             } else {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No active sessions found</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;"><i class="fas fa-database"></i> No active sessions found<br><small>Go to Pair Device to connect a bot</small></td></tr>';
             }
         } catch(e) {
             console.error('Error loading sessions:', e);
-            document.getElementById('sessionsBody').innerHTML = '<tr><td colspan="5" style="text-align: center;">Error loading sessions</td></tr>';
+            document.getElementById('sessionsBody').innerHTML = '<tr><td colspan="5" style="text-align: center;"><i class="fas fa-exclamation-triangle"></i> Error loading sessions<br><small>Make sure the server is running</small></td></tr>';
         }
     }
 
@@ -697,14 +771,21 @@
 
     // Reconnect session
     async function reconnectSession(number) {
-        if(confirm(`Reconnect bot for ${number}?`)) {
+        if(confirm(`⚠️ Reconnect bot for ${number}?\nThis will attempt to restart the connection.`)) {
             try {
+                showToast(`Reconnecting bot ${number}...`, 'info');
                 const res = await fetch(`/code?number=${number}`);
                 const data = await res.json();
-                alert(data.status === 'already_connected' ? 'Bot is already connected!' : 'Reconnection initiated!');
-                setTimeout(() => loadSessions(), 2000);
+                if(data.status === 'already_connected') {
+                    showToast(`Bot ${number} is already connected!`, 'success');
+                } else if(data.code) {
+                    showToast(`New pairing code sent to your WhatsApp!`, 'success');
+                } else {
+                    showToast(`Reconnection initiated for ${number}`, 'success');
+                }
+                setTimeout(() => loadSessions(), 3000);
             } catch(e) {
-                alert('Error reconnecting bot');
+                showToast('Error reconnecting bot', 'error');
             }
         }
     }
@@ -713,12 +794,13 @@
     async function disconnectSession(number) {
         if(confirm(`⚠️ WARNING: Disconnect bot for ${number}?\nThis will remove the session permanently!`)) {
             try {
+                showToast(`Disconnecting bot ${number}...`, 'info');
                 const res = await fetch(`/disconnect?number=${number}`);
                 const data = await res.json();
-                alert(data.message || 'Bot disconnected successfully');
-                setTimeout(() => loadSessions(), 1000);
+                showToast(data.message || 'Bot disconnected successfully', 'success');
+                setTimeout(() => loadSessions(), 2000);
             } catch(e) {
-                alert('Error disconnecting bot');
+                showToast('Error disconnecting bot', 'error');
             }
         }
     }
@@ -739,9 +821,12 @@
         
         if(pin === ADMIN_PIN) {
             closeAdminModal();
-            window.location.href = 'admin-panel.html';
+            showToast('Admin access granted!', 'success');
+            setTimeout(() => {
+                window.location.href = 'admin-panel.html';
+            }, 500);
         } else {
-            alert('❌ Invalid Admin PIN!');
+            showToast('❌ Invalid Admin PIN!', 'error');
         }
     }
 
@@ -760,14 +845,64 @@
     }
 
     function contactPremium() {
+        closePremiumModal();
         window.open('https://wa.me/255789661031?text=HELLO%20SILA%20I%20WANT%20PREMIUM%20FEATURE%27S', '_blank');
     }
 
-    // Auto refresh every 10 seconds
-    setInterval(loadSessions, 10000);
+    // ==================== PWA INSTALLATION ====================
+    let deferredPrompt;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        document.getElementById('installBtn').style.display = 'flex';
+        console.log('[PWA] Install prompt available');
+    });
+
+    function installPWA() {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    showToast('App installed successfully! 🎉', 'success');
+                } else {
+                    showToast('Installation cancelled', 'info');
+                }
+                deferredPrompt = null;
+                document.getElementById('installBtn').style.display = 'none';
+            });
+        } else {
+            showToast('Install prompt not available. Use browser menu to install.', 'info');
+        }
+    }
+
+    // Check if already installed
+    window.addEventListener('appinstalled', (evt) => {
+        console.log('[PWA] App was installed');
+        showToast('Thank you for installing MOMY-KIDY Bot! 🚀', 'success');
+    });
+
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').then((registration) => {
+                console.log('[PWA] Service Worker registered with scope:', registration.scope);
+            }).catch((error) => {
+                console.log('[PWA] Service Worker registration failed:', error);
+            });
+        });
+    }
+
+    // Auto refresh every 15 seconds
+    let refreshInterval = setInterval(loadSessions, 15000);
     
     // Initial load
     loadSessions();
+
+    // Cleanup interval on page unload
+    window.addEventListener('beforeunload', () => {
+        if(refreshInterval) clearInterval(refreshInterval);
+    });
 </script>
 
 </body>
