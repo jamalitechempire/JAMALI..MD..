@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOMY-KIDY | Bot Configuration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #0a0f1a 50%, #000428 100%);
+            font-family: 'Inter', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            background: linear-gradient(135deg, #00f6ff, #b400ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .config-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .config-group {
+            margin-bottom: 25px;
+        }
+
+        .config-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #00f6ff;
+        }
+
+        .config-group input, .config-group select, .config-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 246, 255, 0.3);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        .config-group input:focus, .config-group select:focus, .config-group textarea:focus {
+            outline: none;
+            border-color: #00f6ff;
+        }
+
+        .config-group small {
+            display: block;
+            margin-top: 5px;
+            opacity: 0.6;
+            font-size: 0.7rem;
+        }
+
+        .premium-banner {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 140, 0, 0.1));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .premium-banner i {
+            color: #ffd700;
+            margin-right: 10px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00f6ff, #b400ff);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 246, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            margin-left: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .premium-locked {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .premium-locked::after {
+            content: '⭐ PREMIUM';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #000;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 12px;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: rgba(0, 246, 255, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            .config-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<a href="dashboard.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+
+<div class="container">
+    <div class="header">
+        <h1><i class="fas fa-sliders-h"></i> Bot Configuration</h1>
+        <p style="opacity: 0.7; margin-top: 10px;">Customize your bot settings</p>
+    </div>
+
+    <div class="premium-banner">
+        <i class="fas fa-crown"></i> Want more features? 
+        <a href="#" onclick="contactPremium()" style="color: #ffd700;">Upgrade to Premium</a>
+    </div>
+
+    <div class="config-card">
+        <h3 style="margin-bottom: 20px;"><i class="fas fa-info-circle"></i> Basic Settings</h3>
+        
+        <div class="config-group">
+            <label>Bot Number <i class="fas fa-mobile-alt"></i></label>
+            <input type="text" id="botNumber" placeholder="Enter WhatsApp number" value="255789661031">
+            <small>The WhatsApp number connected to this bot</small>
+        </div>
+
+        <div class="config-group">
+            <label>Bot Prefix <i class="fas fa-hashtag"></i></label>
+            <input type="text" id="botPrefix" placeholder="Command prefix" value=".">
+            <small>Example: .menu, .ping</small>
+        </div>
+
+        <div class="config-group premium-locked">
+            <label>Bot Name <i class="fas fa-tag"></i> <span style="color: #ffd700;">⭐ PREMIUM</span></label>
+            <input type="text" placeholder="Custom bot name" value="MOMY-KIDY" disabled>
+            <small>Change your bot's display name</small>
+        </div>
+    </div>
+
+    <div class="config-card">
+        <h3 style="margin-bottom: 20px;"><i class="fas fa-robot"></i> Auto Features</h3>
+        
+        <div class="config-group">
+            <label>Auto View Status</label>
+            <select id="autoViewStatus">
+                <option value="true">✅ Enabled</option>
+                <option value="false">❌ Disabled</option>
+            </select>
+        </div>
+
+        <div class="config-group">
+            <label>Auto Like Status</label>
+            <select id="autoLikeStatus">
+                <option value="true">✅ Enabled</option>
+                <option value="false">❌ Disabled</option>
+            </select>
+        </div>
+
+        <div class="config-group">
+            <label>Auto Reply</label>
+            <select id="autoReply">
+                <option value="true">✅ Enabled</option>
+                <option value="false">❌ Disabled</option>
+            </select>
+        </div>
+
+        <div class="config-group">
+            <label>Anti-Call</label>
+            <select id="antiCall">
+                <option value="false">❌ Disabled</option>
+                <option value="true">✅ Enabled</option>
+            </select>
+        </div>
+
+        <div class="config-group">
+            <label>Anti-Delete</label>
+            <select id="antiDelete">
+                <option value="false">❌ Disabled</option>
+                <option value="true">✅ Enabled</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="config-card premium-locked">
+        <h3 style="margin-bottom: 20px;"><i class="fas fa-gem"></i> Premium Features <span style="color: #ffd700;">⭐</span></h3>
+        
+        <div class="config-group">
+            <label>Custom Welcome Message</label>
+            <textarea rows="3" placeholder="Upgrade to premium to customize welcome messages" disabled></textarea>
+        </div>
+
+        <div class="config-group">
+            <label>Custom Auto-Replies</label>
+            <textarea rows="5" placeholder="Upgrade to premium to add custom auto-replies" disabled></textarea>
+        </div>
+    </div>
+
+    <div class="button-group">
+        <button class="btn btn-secondary" onclick="loadConfig()">Load Current</button>
+        <button class="btn btn-primary" onclick="saveConfig()">Save Changes</button>
+    </div>
+</div>
+
+<script>
+    // Get number from URL or use default
+    const urlParams = new URLSearchParams(window.location.search);
+    const botNumber = urlParams.get('number') || 'default';
+
+    async function loadConfig() {
+        try {
+            const res = await fetch(`/api/config?number=${botNumber}`);
+            if(res.ok) {
+                const config = await res.json();
+                document.getElementById('autoViewStatus').value = config.AUTO_VIEW_STATUS || 'true';
+                document.getElementById('autoLikeStatus').value = config.AUTO_LIKE_STATUS || 'true';
+                document.getElementById('autoReply').value = config.AUTO_REPLY_ENABLE || 'true';
+                document.getElementById('antiCall').value = config.ANTI_CALL || 'false';
+                document.getElementById('antiDelete').value = config.ANTI_DELETE || 'false';
+                document.getElementById('botPrefix').value = config.PREFIX || '.';
+            }
+        } catch(e) {
+            console.error('Error loading config:', e);
+        }
+    }
+
+    async function saveConfig() {
+        const config = {
+            AUTO_VIEW_STATUS: document.getElementById('autoViewStatus').value,
+            AUTO_LIKE_STATUS: document.getElementById('autoLikeStatus').value,
+            AUTO_REPLY_ENABLE: document.getElementById('autoReply').value,
+            ANTI_CALL: document.getElementById('antiCall').value,
+            ANTI_DELETE: document.getElementById('antiDelete').value,
+            PREFIX: document.getElementById('botPrefix').value
+        };
+
+        try {
+            const res = await fetch(`/api/config/update?number=${botNumber}&config=${JSON.stringify(config)}`);
+            const data = await res.json();
+            if(data.status === 'otp_sent') {
+                const otp = prompt('OTP sent to your WhatsApp! Enter the 6-digit code:');
+                if(otp) {
+                    const verifyRes = await fetch(`/verify-otp?number=${botNumber}&otp=${otp}`);
+                    const verifyData = await verifyRes.json();
+                    alert(verifyData.message || 'Config updated successfully!');
+                }
+            } else {
+                alert('Config updated successfully!');
+            }
+        } catch(e) {
+            alert('Error saving config: ' + e.message);
+        }
+    }
+
+    function contactPremium() {
+        window.open('https://wa.me/255789661031?text=HELLO%20SILA%20I%20WANT%20PREMIUM%20FEATURE%27S', '_blank');
+    }
+
+    loadConfig();
+</script>
+
+</body>
+</html>
