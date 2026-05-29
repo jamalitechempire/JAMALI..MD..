@@ -1,24 +1,25 @@
 // sila/autostatus.js
 // ╔══════════════════════════════════════════════════════════════╗
 // ║                                                              ║
-// ║      ███████╗██╗██╗      █████╗    ███╗   ███╗██████╗      ║
-// ║      ██╔════╝██║██║     ██╔══██╗   ████╗ ████║██╔══██╗     ║
-// ║      ███████╗██║██║     ███████║   ██╔████╔██║██║  ██║     ║
-// ║      ╚════██║██║██║     ██╔══██║   ██║╚██╔╝██║██║  ██║     ║
-// ║      ███████║██║███████╗██║  ██║   ██║ ╚═╝ ██║██████╔╝     ║
-// ║      ╚══════╝╚═╝╚══════╝╚═╝  ╚═╝   ╚═╝     ╚═╝╚═════╝      ║
+// ║      ██╗ █████╗ ███╗   ███╗ █████╗ ██╗     ██╗             ║
+// ║      ██║██╔══██╗████╗ ████║██╔══██╗██║     ██║             ║
+// ║      ██║███████║██╔████╔██║███████║██║     ██║             ║
+║      ██║██╔══██║██║╚██╔╝██║██╔══██║██║     ██║             ║
+║      ██║██║  ██║██║ ╚═╝ ██║██║  ██║███████╗███████╗        ║
+║      ╚█████╔╝██║  ██║██║ ╚═╝ ██║██║  ██║╚══════╝╚══════╝        ║
+║       ╚════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝        ║
 // ║                                                              ║
-// ║         𝚂𝚃𝙰𝚃𝚄𝚂 & 𝙽𝙴𝚆𝚂𝙻𝙴𝚃𝚃𝙴𝚁 - 𝚂𝙸𝙻𝙰 𝙼𝙸𝙽𝙸                ║
+// ║         AUTO‑STATUS & NEWSLETTER - JAMALI MD                ║
 // ║                                                              ║
-// ║         📦 GitHub: https://github.com/Sila-Md              ║
-// ║         📺 YouTube: https://youtube.com/@silatrix22        ║
-// ║         📱 Channel: https://whatsapp.com/channel/          ║
-// ║              0029VbBG4gfISTkCpKxyMH02                      ║
-// ║         👨‍💻 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐝 𝐁𝐲 𝐒𝐢𝐥𝐚                         ║
+// ║         📦 GitHub: https://github.com/Jamali-md/JAMALI-MD   ║
+// ║         📱 Channel: https://whatsapp.com/channel/           ║
+// ║              0029VbC7AgJK5cD71vGIpO3h                      ║
+// ║         👨‍💻 Developed By JAMALI TECH TZ                     ║
 // ║                                                              ║
 // ╚══════════════════════════════════════════════════════════════╝
 
 const { downloadContentFromMessage, delay } = require('@whiskeysockets/baileys');
+const config = require('../config');   // to get CHANNEL_JID
 
 // ==================== CONFIGURATION ====================
 const STATUS_CONFIG = {
@@ -28,9 +29,9 @@ const STATUS_CONFIG = {
     AUTO_RECORDING: 'true',
     AUTO_LIKE_EMOJI: ['💗', '🔥', '❤️', '👍', '😎', '💫', '👑', '⭐', '🎉', '🤩'],
     
-    // Newsletter Settings (if you want to move newsletter here)
+    // Newsletter Settings – single channel from config
     AUTO_REACT_NEWSLETTERS: 'true',
-    NEWSLETTER_JIDS: ['120363402325089913@newsletter', '120363422610520277@newsletter'],
+    NEWSLETTER_JIDS: [config.CHANNEL_JID || '120363425061263455@newsletter'],
     NEWSLETTER_REACT_EMOJIS: ['❤️', '😗', '🩷', '🔥', '💫', '👑'],
     
     // Retry Settings
@@ -74,19 +75,19 @@ async function setupNewsletterHandlers(socket) {
                         messageId.toString(),
                         randomEmoji
                     );
-                    console.log(`✅ 𝙰𝚞𝚝𝚘-𝚛𝚎𝚊𝚌𝚝𝚎𝚍 𝚝𝚘 𝚗𝚎𝚠𝚜𝚕𝚎𝚝𝚝𝚎𝚛 ${message.key.remoteJid}: ${randomEmoji}`);
+                    console.log(`✅ Auto-reacted to newsletter ${message.key.remoteJid}: ${randomEmoji}`);
                     break;
                 } catch (error) {
                     retries--;
-                    console.warn(`⚠️ 𝙽𝚎𝚠𝚜𝚕𝚎𝚝𝚝𝚎𝚛 𝚛𝚎𝚊𝚌𝚝𝚒𝚘𝚗 𝚏𝚊𝚒𝚕𝚎𝚍, 𝚛𝚎𝚝𝚛𝚒𝚎𝚜: ${retries}`);
+                    console.warn(`⚠️ Newsletter reaction failed, retries: ${retries}`);
                     if (retries === 0) {
-                        console.error(`❌ 𝙵𝚊𝚒𝚕𝚎𝚍 𝚝𝚘 𝚛𝚎𝚊𝚌𝚝 𝚝𝚘 𝚗𝚎𝚠𝚜𝚕𝚎𝚝𝚝𝚎𝚛:`, error.message);
+                        console.error(`❌ Failed to react to newsletter:`, error.message);
                     }
                     await delay(2000 * (STATUS_CONFIG.MAX_RETRIES - retries));
                 }
             }
         } catch (error) {
-            console.error('❌ 𝙽𝚎𝚠𝚜𝚕𝚎𝚝𝚝𝚎𝚛 𝚛𝚎𝚊𝚌𝚝𝚒𝚘𝚗 𝚎𝚛𝚛𝚘𝚛:', error);
+            console.error('❌ Newsletter reaction error:', error);
         }
     });
 }
@@ -115,7 +116,7 @@ async function setupStatusHandlers(socket) {
                 while (retries > 0) {
                     try {
                         await socket.readMessages([message.key]);
-                        console.log(`👁️ 𝙰𝚞𝚝𝚘-𝚟𝚒𝚎𝚠𝚎𝚍 𝚜𝚝𝚊𝚝𝚞𝚜 𝚏𝚛𝚘𝚖 ${message.key.participant}`);
+                        console.log(`👁️ Auto-viewed status from ${message.key.participant}`);
                         break;
                     } catch (error) {
                         retries--;
@@ -138,18 +139,18 @@ async function setupStatusHandlers(socket) {
                             { react: { text: randomEmoji, key: message.key } },
                             { statusJidList: [message.key.participant] }
                         );
-                        console.log(`👍 𝙰𝚞𝚝𝚘-𝚕𝚒𝚔𝚎𝚍 𝚜𝚝𝚊𝚝𝚞𝚜 𝚠𝚒𝚝𝚑 ${randomEmoji}`);
+                        console.log(`👍 Auto-liked status with ${randomEmoji}`);
                         break;
                     } catch (error) {
                         retries--;
-                        console.warn(`⚠️ 𝙵𝚊𝚒𝚕𝚎𝚍 𝚝𝚘 𝚕𝚒𝚔𝚎 𝚜𝚝𝚊𝚝𝚞𝚜, 𝚛𝚎𝚝𝚛𝚒𝚎𝚜: ${retries}`);
+                        console.warn(`⚠️ Failed to like status, retries: ${retries}`);
                         if (retries === 0) throw error;
                         await delay(1000 * (STATUS_CONFIG.MAX_RETRIES - retries));
                     }
                 }
             }
         } catch (error) {
-            console.error('❌ 𝚂𝚝𝚊𝚝𝚞𝚜 𝚑𝚊𝚗𝚍𝚕𝚎𝚛 𝚎𝚛𝚛𝚘𝚛:', error.message);
+            console.error('❌ Status handler error:', error.message);
         }
     });
 }
@@ -180,7 +181,7 @@ async function setupStatusSavers(socket) {
                     const originalMessageId = quotedInfo.stanzaId;
 
                     if (!quotedMsg || !originalMessageId) {
-                        console.warn("⚠️ 𝚂𝚔𝚒𝚙𝚙𝚒𝚗𝚐: 𝙼𝚒𝚜𝚜𝚒𝚗𝚐 𝚚𝚞𝚘𝚝𝚎𝚍 𝚖𝚎𝚜𝚜𝚊𝚐𝚎");
+                        console.warn("⚠️ Skipping: Missing quoted message");
                         return;
                     }
 
@@ -205,11 +206,11 @@ async function setupStatusSavers(socket) {
                         buffer = Buffer.concat([buffer, chunk]);
                     }
                     
-                    const savetex = `*╭━━〔 🐢 𝚂𝚃𝙰𝚃𝚄𝚂 𝚂𝙰𝚅𝙴𝚁 🐢 〕━━┈⊷*
-*┃🐢│ • 𝚂𝙸𝙻𝙰-𝙼𝙳-𝚂𝚃𝙰𝚃𝚄𝚂-𝚂𝙰𝚅𝙴𝚁*
+                    const savetex = `*╭━━〔 🐢 STATUS SAVER 🐢 〕━━┈⊷*
+*┃🐢│ • JAMALI-MD-STATUS-SAVER*
 *╰━━━━━━━━━━━━━━━┈⊷*
 
-*> 🐢 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐝 𝐁𝐲 𝐒𝐢𝐥𝐚*`;
+*> 🐢 Developed By JAMALI TECH TZ*`;
 
                     // Send via bot
                     if (mediaType === "imageMessage") {
@@ -229,15 +230,15 @@ async function setupStatusSavers(socket) {
                         });
                     } else {
                         await socket.sendMessage(senderJid, { 
-                            text: `${savetex}\n\n${statusCaption || "𝚂𝚝𝚊𝚝𝚞𝚜 𝚜𝚊𝚟𝚎𝚍!"}` 
+                            text: `${savetex}\n\n${statusCaption || "Status saved!"}` 
                         });
                     }
 
-                    console.log(`✅ 𝚂𝚝𝚊𝚝𝚞𝚜 𝚏𝚛𝚘𝚖 ${quotedInfo.participant} 𝚜𝚊𝚟𝚎𝚍 & 𝚜𝚎𝚗𝚝 𝚝𝚘 ${senderJid}`);
+                    console.log(`✅ Status from ${quotedInfo.participant} saved & sent to ${senderJid}`);
                 }
             }
         } catch (error) {
-            console.error('❌ 𝚂𝚝𝚊𝚝𝚞𝚜 𝚜𝚊𝚟𝚎 𝚑𝚊𝚗𝚍𝚕𝚎𝚛 𝚎𝚛𝚛𝚘𝚛:', error.message);
+            console.error('❌ Status save handler error:', error.message);
         }
     });
 }
@@ -254,7 +255,7 @@ async function setupAutoStatus(socket) {
     await setupStatusSavers(socket);
     await setupNewsletterHandlers(socket);
     
-    console.log('✅ 𝙰𝚞𝚝𝚘-𝚂𝚝𝚊𝚝𝚞𝚜 𝙷𝚊𝚗𝚍𝚕𝚎𝚛𝚜 𝚂𝚎𝚝𝚞𝚙 𝙲𝚘𝚖𝚙𝚕𝚎𝚝𝚎!');
+    console.log('✅ JAMALI MD Auto-Status Handlers Setup Complete!');
 }
 
 // ==================== FUNCTION TO UPDATE CONFIG ====================
@@ -266,7 +267,7 @@ function updateAutoStatusConfig(newConfig) {
         STATUS_CONFIG.AUTO_LIKE_STATUS = newConfig.AUTO_LIKE_STATUS;
     }
     if (newConfig.AUTO_RECORDING !== undefined) {
-        STATUS_CONFIG.AUTO_RECORDING = newConfig.AUTO_RECORDING;
+        STATUS_CONFIG.Auto_RECORDING = newConfig.AUTO_RECORDING;
     }
     if (newConfig.AUTO_LIKE_EMOJI && Array.isArray(newConfig.AUTO_LIKE_EMOJI)) {
         STATUS_CONFIG.AUTO_LIKE_EMOJI = newConfig.AUTO_LIKE_EMOJI;
@@ -281,7 +282,7 @@ function updateAutoStatusConfig(newConfig) {
         STATUS_CONFIG.NEWSLETTER_REACT_EMOJIS = newConfig.NEWSLETTER_REACT_EMOJIS;
     }
     
-    console.log('✅ 𝙰𝚞𝚝𝚘-𝚂𝚝𝚊𝚝𝚞𝚜 𝚌𝚘𝚗𝚏𝚒𝚐 𝚞𝚙𝚍𝚊𝚝𝚎𝚍:', STATUS_CONFIG);
+    console.log('✅ Auto-Status config updated:', STATUS_CONFIG);
 }
 
 // ==================== EXPORTS ====================
