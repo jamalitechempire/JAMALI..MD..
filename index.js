@@ -88,7 +88,7 @@ app.listen(port, '0.0.0.0', () => {
     console.log(`
 ╔══════════════════════════════════════════════════════════════╗
 ║                                                              ║
-║      🔐 MOMY-KIDY BOT SERVER v3.0 🔐                       ║
+║      🔐 JAMALI MD BOT SERVER v3.0 🔐                        ║
 ║                                                              ║
 ║      📡 Server running on port: ${port}                      ║
 ║      🌐 Dashboard: http://localhost:${port}/dashboard       ║
@@ -98,7 +98,7 @@ app.listen(port, '0.0.0.0', () => {
 ║         - Chrome: Look for install icon in address bar      ║
 ║         - Or click "Install App" button in dashboard        ║
 ║                                                              ║
-║      👨‍💻 Developed By Sila Tech                             ║
+║      👨‍💻 Developed By JAMALI TECH TZ                         ║
 ║                                                              ║
 ╚══════════════════════════════════════════════════════════════╝
     `);
