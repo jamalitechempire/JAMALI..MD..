@@ -6,10 +6,10 @@
 <meta name="theme-color" content="#0a0a0a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="MOMY-KIDY Pair">
+<meta name="apple-mobile-web-app-title" content="JAMALI MD Pair">
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/icons/icon-192.png">
-<title>🔐 MOMY-KIDY BOT | Pair Device</title>
+<title>⚡ JAMALI MD | Pair Device</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
 
@@ -558,26 +558,7 @@ footer::before{
 .toast.error{border-color:#ff4444;color:#ff4444;}
 .toast.info{border-color:#00f6ff;color:#00f6ff;}
 
-.back-btn{
-  position:fixed;
-  top:20px;
-  left:20px;
-  background:rgba(255,255,255,0.1);
-  border:1px solid rgba(255,255,255,0.2);
-  padding:10px 20px;
-  border-radius:12px;
-  color:#fff;
-  text-decoration:none;
-  transition:all 0.3s;
-  z-index:100;
-  font-size:0.9rem;
-  backdrop-filter:blur(10px);
-}
-
-.back-btn:hover{
-  background:rgba(0,246,255,0.2);
-  transform:translateX(-5px);
-}
+/* No back button, so we remove the .back-btn styles if unused (keeping for safety) */
 
 ::-webkit-scrollbar{
   width:8px;
@@ -639,6 +620,29 @@ footer::before{
   0%,100%{transform:translateY(0)}
   50%{transform:translateY(-10px)}
 }
+
+/* Owner & Channel info panel */
+.info-panel {
+  background: rgba(0,0,0,0.3);
+  border-radius: 16px;
+  padding: 12px;
+  margin: 15px 0;
+  text-align: left;
+}
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.info-row:last-child {
+  border-bottom: none;
+}
+.info-row a {
+  color: var(--green);
+  text-decoration: none;
+}
 </style>
 </head>
 
@@ -658,16 +662,26 @@ footer::before{
 
 <audio id="bgMusic" src="https://files.catbox.moe/iwpfp2.mp3" loop></audio>
 
-<a href="dashboard.html" class="back-btn"><i class="fas fa-arrow-left"></i> Dashboard</a>
-
 <div class="container">
-  <div class="premium-badge">⭐ Premium Pro Bot 2026</div>
+  <div class="premium-badge">⭐ JAMALI MD PREMIUM 2026</div>
   
-  <h1>MOMY-KIDY BOT</h1>
+  <h1>JAMALI MD</h1>
+
+  <!-- OWNER & CHANNEL INFO -->
+  <div class="info-panel">
+    <div class="info-row">
+      <span><i class="fas fa-crown"></i> Owner</span>
+      <span><strong>JAMALI TECH TZ</strong> <i class="fab fa-whatsapp"></i> <a href="https://wa.me/255784062158">+255 784 062 158</a></span>
+    </div>
+    <div class="info-row">
+      <span><i class="fas fa-hashtag"></i> Channel</span>
+      <span><a href="https://whatsapp.com/channel/0029VbC7AgJK5cD71vGIpO3h" target="_blank">Join Official Channel →</a></span>
+    </div>
+  </div>
   
   <div class="status-container">
     <div class="status-dot"></div>
-    <div class="status" id="statusText">SYSTEM STATUS : ONLINE</div>
+    <div class="status" id="statusText">SYSTEM ONLINE · READY</div>
   </div>
 
   <div class="input-wrapper">
@@ -687,10 +701,10 @@ footer::before{
   <div class="controls">
     <button onclick="toggleMusic()"><i class="fas fa-music"></i> Music</button>
     <button onclick="toggleOverlay()"><i class="fas fa-moon"></i> Overlay</button>
-    <button onclick="window.location.href='dashboard.html'"><i class="fas fa-home"></i> Home</button>
+    <button onclick="window.location.reload()"><i class="fas fa-sync-alt"></i> Refresh</button>
   </div>
 
-  <footer>♱♱♱♱♱ 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐒𝐢𝐥𝐚 𝐓𝐞𝐜𝐡 ♱♱♱♱</footer>
+  <footer>⚡ Powered by <strong>JAMALI TECH TZ</strong> | © 2026</footer>
 </div>
 
 <!-- Install App Banner -->
@@ -699,7 +713,7 @@ footer::before{
     <div class="install-banner-text">
       <i class="fas fa-download"></i>
       <div>
-        <strong>Install MOMY-KIDY App</strong>
+        <strong>Install JAMALI MD App</strong>
         <p>Get faster access with our native app</p>
       </div>
     </div>
@@ -857,7 +871,7 @@ function closeInstallBanner() {
 // Check if already installed
 window.addEventListener('appinstalled', (evt) => {
     console.log('[PWA] App was installed');
-    showToast('Thank you for installing MOMY-KIDY Bot! 🚀', 'success');
+    showToast('Thank you for installing JAMALI MD Bot! 🚀', 'success');
 });
 
 // Register Service Worker
@@ -873,4 +887,4 @@ if ('serviceWorker' in navigator) {
 </script>
 
 </body>
-</html>
+  </html>
